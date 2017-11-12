@@ -3,7 +3,7 @@ import { View, Text } from 'react-native'
 
 export default function NewDeck () {
   return (
-    <View>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <Text>New Deck View</Text>
     </View>
   )
