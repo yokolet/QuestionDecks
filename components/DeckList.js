@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Platform, StyleSheet, Text, View } from 'react-native'
+import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { connect } from 'react-redux'
 import { receiveEntries } from '../actions'
 import { fetchDeckEntries } from '../utils/api'
@@ -15,14 +15,18 @@ class DeckList extends Component {
       .then((entries) => dispatch(receiveEntries(entries)))
   }
   render () {
-    const { entries } = this.props
+    const { entries, navigation } = this.props
     return (
       <View style={styles.container}>
         {Object.keys(entries).map((key) => (
-          <View key={key} style={styles.deck}>
-            <Text style={styles.deckTitle}>{entries[key].name}</Text>
-            <Text style={styles.deckInfo}>{entries[key].cards.length} cards</Text>
-          </View>
+          <TouchableOpacity
+            key={key}
+            onPress={() => navigation.navigate('Details')}>
+            <View style={styles.deck}>
+              <Text style={styles.deckTitle}>{entries[key].name}</Text>
+              <Text style={styles.deckInfo}>{entries[key].cards.length} cards</Text>
+            </View>
+          </TouchableOpacity>
         ))}
       </View>
     )
@@ -41,7 +45,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 30,
     margin: 5,
-    marginBottom: 0,
     ...Platform.select({
       ios: {
         shadowColor: 'rgba(0, 0, 0, .2)',
