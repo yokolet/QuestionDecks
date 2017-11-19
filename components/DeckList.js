@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { connect } from 'react-redux'
-import { receiveEntries } from '../actions'
+import { receiveEntries, setCurrentDeck } from '../actions'
 import { fetchDeckEntries } from '../utils/api'
 import { white, gray1, gray3, gray5 } from '../utils/colors'
 
@@ -14,14 +14,20 @@ class DeckList extends Component {
     fetchDeckEntries()
       .then((entries) => dispatch(receiveEntries(entries)))
   }
+  deckPress = (dispatch, navigation, deckId) => {
+    navigation.navigate('Details')
+    dispatch(setCurrentDeck(deckId))
+  }
   render () {
-    const { entries, navigation } = this.props
+    const { entries, navigation, dispatch } = this.props
     return (
       <View style={styles.container}>
         {Object.keys(entries).map((key) => (
           <TouchableOpacity
             key={key}
-            onPress={() => navigation.navigate('Details')}>
+            onPress={() => (
+              this.deckPress(dispatch, navigation, key)
+            )}>
             <View style={styles.deck}>
               <Text style={styles.deckTitle}>{entries[key].name}</Text>
               <Text style={styles.deckInfo}>{entries[key].cards.length} cards</Text>
@@ -73,7 +79,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps (entries) {
   return {
-    entries
+    entries,
   }
 }
 
