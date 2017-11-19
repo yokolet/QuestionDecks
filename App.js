@@ -39,8 +39,8 @@ const RootTabs = TabNavigator({
   Home: {
     screen: DeckList,
     navigationOptions: {
-      headerTitle: 'Home',
-      tabBarLabel: 'Home',
+      headerTitle: 'DECKS',
+      tabBarLabel: 'DECKS',
       tabBarIcon: ({ tintColor, focused }) => (
         <Icon
           type='ionicon'

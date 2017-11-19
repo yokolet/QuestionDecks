@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Platform, StyleSheet, Text, View } from 'react-native'
 import { connect } from 'react-redux'
 import { receiveEntries } from '../actions'
 import { fetchDeckEntries } from '../utils/api'
+import { white, gray1, gray3, gray5 } from '../utils/colors'
 
 class DeckList extends Component {
   state = {
@@ -15,15 +16,12 @@ class DeckList extends Component {
   }
   render () {
     const { entries } = this.props
-    console.log('render')
-    console.log('entries:' + JSON.stringify(entries))
     return (
       <View style={styles.container}>
-        <Text>DeckList View</Text>
         {Object.keys(entries).map((key) => (
-          <View key={key}>
-            <Text>{entries[key].name}</Text>
-            <Text>{entries[key].cards.length}</Text>
+          <View key={key} style={styles.deck}>
+            <Text style={styles.deckTitle}>{entries[key].name}</Text>
+            <Text style={styles.deckInfo}>{entries[key].cards.length} cards</Text>
           </View>
         ))}
       </View>
@@ -34,9 +32,40 @@ class DeckList extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  deck: {
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: white,
+    borderColor: gray5,
+    borderWidth: 1,
+    padding: 30,
+    margin: 5,
+    marginBottom: 0,
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgba(0, 0, 0, .2)',
+        shadowOffset:  { height: 0, width: 0 },
+        shadowOpacity: 1,
+        shadowRadius: 1,
+      },
+      android: {
+        elevation: 1,
+      },
+    })
   },
+  deckTitle: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 15,
+    color: gray1,
+  },
+  deckInfo: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: gray3,
+  }
 });
 
 function mapStateToProps (entries) {

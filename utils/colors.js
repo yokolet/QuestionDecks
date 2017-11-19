@@ -1,5 +1,8 @@
 export const purple = '#292477'
 export const gray = '#757575'
+export const gray1 = '#43484d'
+export const gray3 = '#86939e'
+export const gray5 = '#e1e8ee'
 export const white = '#fff'
 export const red = '#b71845'
 export const orange = '#f26f28'
