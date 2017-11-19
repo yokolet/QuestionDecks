@@ -14,19 +14,19 @@ class DeckList extends Component {
     fetchDeckEntries()
       .then((entries) => dispatch(receiveEntries(entries)))
   }
-  deckPress = (dispatch, navigation, deckId) => {
-    navigation.navigate('Details')
+  deckPress = (dispatch, navigation, entries, deckId) => {
+    navigation.navigate('Details', {current: entries[deckId].name})
     dispatch(setCurrentDeck(deckId))
   }
   render () {
     const { entries, navigation, dispatch } = this.props
     return (
       <View style={styles.container}>
-        {Object.keys(entries).map((key) => (
+        {entries && Object.keys(entries).map((key) => (
           <TouchableOpacity
             key={key}
             onPress={() => (
-              this.deckPress(dispatch, navigation, key)
+              this.deckPress(dispatch, navigation, entries, key)
             )}>
             <View style={styles.deck}>
               <Text style={styles.deckTitle}>{entries[key].name}</Text>
@@ -77,9 +77,9 @@ const styles = StyleSheet.create({
   }
 });
 
-function mapStateToProps (entries) {
+function mapStateToProps (deckData) {
   return {
-    entries,
+    entries: deckData.entries,
   }
 }
 

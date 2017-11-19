@@ -8,6 +8,7 @@ import reducer from './reducers'
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import { Icon } from 'react-native-elements'
 import DeckList from './components/DeckList'
+import Deck from './components/Deck'
 import NewDeck from './components/NewDeck'
 
 const { StatusBarManager } = NativeModules
@@ -73,10 +74,7 @@ const RootNavigator = StackNavigator({
     screen: RootTabs,
   },
   Details: {
-    screen: DetailsScreen,
-    navigationOptions: {
-      headerTitle: 'Details',
-    }
+    screen: Deck,
   },
 })
 

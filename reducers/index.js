@@ -1,20 +1,24 @@
-import { RECEIVE_ENTRIES, SHOW_DECK } from '../actions'
+import { RECEIVE_ENTRIES, SET_CURRENT_DECK } from '../actions'
 
-function entries (state = {}, action) {
+const initialState = {
+  entries: {},
+  deckId: '',
+}
+function deckData (state = initialState, action) {
   switch (action.type) {
     case RECEIVE_ENTRIES :
       return {
         ...state,
-        ...action.entries,
+        entries: action.entries,
       }
-    case SHOW_DECK :
+    case SET_CURRENT_DECK :
       return {
         ...state,
-        ...action.deck,
+        deckId: action.deckId,
       }
     default :
       return state
   }
 }
 
-export default entries
+export default deckData
