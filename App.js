@@ -1,6 +1,10 @@
 import React from 'react'
 import { StyleSheet, Button, Text, View, StatusBar, NativeModules, Platform } from 'react-native'
 import { white, purple } from './utils/colors'
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware } from 'redux'
+import logger from 'redux-logger'
+import reducer from './reducers'
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import { Icon } from 'react-native-elements'
 import DeckList from './components/DeckList'
@@ -33,7 +37,7 @@ const DetailsScreen = () => (
 
 const RootTabs = TabNavigator({
   Home: {
-    screen: HomeScreen,
+    screen: DeckList,
     navigationOptions: {
       headerTitle: 'Home',
       tabBarLabel: 'Home',
@@ -76,13 +80,24 @@ const RootNavigator = StackNavigator({
   },
 })
 
+function configureStore(initState) {
+  return createStore(
+    reducer,
+    initState,
+    applyMiddleware(logger)
+  )
+}
+const store = configureStore({})
+
 export default class App extends React.Component {
   render() {
     return (
-      <View style={{flex: 1}}>
-        <AppStatusBar backgroundColor={white} barStyle='dark-content' hidden={false}/>
-        <RootNavigator />
-      </View>
+      <Provider store={store}>
+        <View style={{flex: 1}}>
+          <AppStatusBar backgroundColor={white} barStyle='dark-content' hidden={false}/>
+          <RootNavigator />
+        </View>
+      </Provider>
     );
   }
 }
