@@ -1,21 +1,26 @@
 import React, { Component } from 'react'
 import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { connect } from 'react-redux'
+import { setCurrentCard } from '../actions'
 import { purple, white, gray1, gray3, gray5, black } from '../utils/colors'
 
 class Deck extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: `${navigation.state.params.current}`
   })
-
+  startQuizPress = (dispatch, navigation) => {
+    navigation.navigate('Card', {current: 'Quiz'})
+    dispatch(setCurrentCard(0))
+  }
   render () {
-    const { entries, deckId } = this.props
+    const { entries, deckId, dispatch, navigation } = this.props
+    let title = entries[deckId].name
     let canStartQuize = entries[deckId].cards.length > 0 ? true : false
     return (
       <View style={styles.container}>
         {entries && deckId &&
           <View style={styles.deck}>
-            <Text style={styles.deckTitle}>{entries[deckId].name}</Text>
+            <Text style={styles.deckTitle}>{title}</Text>
             <Text style={styles.deckInfo}>{entries[deckId].cards.length} cards</Text>
             <View style={styles.buttonContainer}>
             <TouchableOpacity
@@ -24,7 +29,10 @@ class Deck extends Component {
             </TouchableOpacity>
             { canStartQuize &&
               <TouchableOpacity
-                style={[styles.button, {backgroundColor: black}]}>
+                style={[styles.button, {backgroundColor: black}]}
+                onPress={() => (
+                  this.startQuizPress(dispatch, navigation)
+                )}>
                 <Text style={[styles.buttonText, {color: white}]}>Start Quiz</Text>
               </TouchableOpacity>
             }

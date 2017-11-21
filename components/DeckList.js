@@ -15,7 +15,7 @@ class DeckList extends Component {
       .then((entries) => dispatch(receiveEntries(entries)))
   }
   deckPress = (dispatch, navigation, entries, deckId) => {
-    navigation.navigate('Details', {current: entries[deckId].name})
+    navigation.navigate('Deck', {current: entries[deckId].name})
     dispatch(setCurrentDeck(deckId))
   }
   render () {

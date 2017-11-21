@@ -9,6 +9,7 @@ import { TabNavigator, StackNavigator } from 'react-navigation'
 import { Icon } from 'react-native-elements'
 import DeckList from './components/DeckList'
 import Deck from './components/Deck'
+import Card from './components/Card'
 import NewDeck from './components/NewDeck'
 
 const { StatusBarManager } = NativeModules
@@ -73,9 +74,12 @@ const RootNavigator = StackNavigator({
   Home: {
     screen: RootTabs,
   },
-  Details: {
+  Deck: {
     screen: Deck,
   },
+  Card: {
+    screen: Card,
+  }
 })
 
 function configureStore(initState) {
