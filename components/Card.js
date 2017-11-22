@@ -1,5 +1,12 @@
 import React, { Component } from 'react'
-import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {
+  Animated,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native'
 import { connect } from 'react-redux'
 import { white, black, green, darkgreen, red, darkred, gray1, gray3, gray5 } from '../utils/colors'
 
@@ -7,10 +14,50 @@ class Card extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: `${navigation.state.params.current}`
   })
+  componentWillMount() {
+    this.animatedValue = new Animated.Value(0)
+    this.value = 0
+    this.animatedValue.addListener(({ value }) => {
+      this.value = value
+    })
+    this.frontInterpolate = this.animatedValue.interpolate({
+      inputRange: [0, 180],
+      outputRange: ['0deg', '180deg'],
+    })
+    this.backInterpolate = this.animatedValue.interpolate({
+      inputRange: [0, 180],
+      outputRange: ['180deg', '360deg'],
+    })
+  }
+  flipCard() {
+    if (this.value >= 90) {
+      Animated.spring(this.animatedValue, {
+        toValue: 0,
+        friction: 8,
+        tension: 10
+      }).start()
+    } else {
+      Animated.spring(this.animatedValue, {
+        toValue: 180,
+        friction: 8,
+        tension: 10,
+      }).start()
+    }
+  }
   answerAndGo = (dispatch, navigation) => {
-
+    console.log('will be implemented')
   }
   render () {
+    const frontAnimatedStyle = {
+      transform: [
+        { rotateY: this.frontInterpolate }
+      ]
+    }
+    const backAnimatedStyle = {
+      transform: [
+        { rotateY: this.backInterpolate }
+      ]
+    }
     const { entries, deckId, cardNo, dispatch, navigation } = this.props
     let total = entries[deckId].cards.length
     let progress = cardNo + '/' + total
@@ -26,9 +73,28 @@ class Card extends Component {
                 <Text style={[styles.headerText, {color: black}]}>{card.title}</Text>
                 <Text style={[styles.headerText, {paddingRight: 0}]}>{cardLeft} Left</Text>
               </View>
-              <Text style={styles.cardQuestion}>{card.question}</Text>
-              <Text style={styles.cardAnswer}>Answer</Text>
-              <Text>{card.answer ? 'yes' : 'no'}</Text>
+              <View style={styles.flipCard}>
+                <Animated.View
+                  style={[frontAnimatedStyle, {backfaceVisibility: 'hidden'}]}>
+                  <Text style={styles.cardQuestion}>{card.question}</Text>
+                  <TouchableOpacity
+                    style={{alignItems: 'center'}}
+                    onPress={() => this.flipCard()}>
+                    <Text style={styles.cardAnswer}>Answer</Text>
+                  </TouchableOpacity>
+                </Animated.View>
+                <Animated.View
+                  style={[backAnimatedStyle, {backfaceVisibility: 'hidden', position: 'absolute'}]}>
+                  <Text style={styles.cardQuestion}>
+                    {card.answer ? 'Yes!' : 'No'}
+                  </Text>
+                  <TouchableOpacity
+                    style={{alignItems: 'center'}}
+                    onPress={() => this.flipCard()}>
+                    <Text style={styles.cardAnswer}>Question</Text>
+                  </TouchableOpacity>
+                </Animated.View>
+              </View>
             </View>
             <View style={styles.buttonContainer}>
               <TouchableOpacity
@@ -91,6 +157,10 @@ const styles = StyleSheet.create({
     paddingRight: 50,
     fontSize: 15,
     color: gray3,
+  },
+  flipCard: {
+    flex: 1,
+    alignItems: 'center',
   },
   cardQuestion: {
     fontSize: 30,
