@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import {
-  Animated,
   Platform,
   StyleSheet,
   Text,
@@ -8,112 +7,89 @@ import {
   View
 } from 'react-native'
 import { connect } from 'react-redux'
-import { white, black, green, darkgreen, red, darkred, gray1, gray3, gray5 } from '../utils/colors'
+import { white, green, darkgreen, red, darkred, gray1, gray5 } from '../utils/colors'
+import CardHeader from './CardHeader'
+import CardBody from './CardBody'
 
 class Card extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: `${navigation.state.params.current}`
   })
-  componentWillMount() {
-    this.animatedValue = new Animated.Value(0)
-    this.value = 0
-    this.animatedValue.addListener(({ value }) => {
-      this.value = value
-    })
-    this.frontInterpolate = this.animatedValue.interpolate({
-      inputRange: [0, 180],
-      outputRange: ['0deg', '180deg'],
-    })
-    this.backInterpolate = this.animatedValue.interpolate({
-      inputRange: [0, 180],
-      outputRange: ['180deg', '360deg'],
-    })
+  state = {
+    index: 0,
+    correct: 0,
+    finished: false,
   }
-  flipCard() {
-    if (this.value >= 90) {
-      Animated.spring(this.animatedValue, {
-        toValue: 0,
-        friction: 8,
-        tension: 10
-      }).start()
-    } else {
-      Animated.spring(this.animatedValue, {
-        toValue: 180,
-        friction: 8,
-        tension: 10,
-      }).start()
+  answerAndGo = (isCorrect, total) => {
+    this.setState((state) => {
+      return {
+        ...state,
+        index: currentIndex + 1,
+      }
+    })
+    if (isCorrect) {
+      this.setState((state) => {
+        return {
+          ...state,
+          correct: state['correct'] + 1,
+        }
+      })
     }
-  }
-  answerAndGo = (dispatch, navigation) => {
-    console.log('will be implemented')
+    let currentIndex = this.state['index']
+    if ((currentIndex + 1) === total) {
+      this.setState((state) => {
+        return {
+          ...state,
+          finished: true,
+        }
+      })
+    }
   }
   render () {
-    const frontAnimatedStyle = {
-      transform: [
-        { rotateY: this.frontInterpolate }
-      ]
-    }
-    const backAnimatedStyle = {
-      transform: [
-        { rotateY: this.backInterpolate }
-      ]
-    }
-    const { entries, deckId, cardNo, dispatch, navigation } = this.props
+    const { entries, deckId, dispatch, navigation } = this.props
+    const { index, correct, finished } = this.state
     let total = entries[deckId].cards.length
-    let progress = cardNo + '/' + total
-    let cardLeft = (total - cardNo)
-    let card = entries[deckId].cards[cardNo]
+    let card = finished ? {} : entries[deckId].cards[index]
+    let body = finished
+      ? <View><Text style={styles.done}>DONE!</Text></View>
+      : <CardBody card={card}/>
     return (
       <View style={styles.container}>
         {entries && deckId &&
           <View style={styles.card}>
             <View style={styles.questionContainer}>
-              <View style={styles.header}>
-                <Text style={styles.headerText}>Progress {progress}</Text>
-                <Text style={[styles.headerText, {color: black}]}>{card.title}</Text>
-                <Text style={[styles.headerText, {paddingRight: 0}]}>{cardLeft} Left</Text>
-              </View>
-              <View style={styles.flipCard}>
-                <Animated.View
-                  style={[frontAnimatedStyle, {backfaceVisibility: 'hidden'}]}>
-                  <Text style={styles.cardQuestion}>{card.question}</Text>
-                  <TouchableOpacity
-                    style={{alignItems: 'center'}}
-                    onPress={() => this.flipCard()}>
-                    <Text style={styles.cardAnswer}>Answer</Text>
-                  </TouchableOpacity>
-                </Animated.View>
-                <Animated.View
-                  style={[backAnimatedStyle, {backfaceVisibility: 'hidden', position: 'absolute'}]}>
-                  <Text style={styles.cardQuestion}>
-                    {card.answer ? 'Yes!' : 'No'}
-                  </Text>
-                  <TouchableOpacity
-                    style={{alignItems: 'center'}}
-                    onPress={() => this.flipCard()}>
-                    <Text style={styles.cardAnswer}>Question</Text>
-                  </TouchableOpacity>
-                </Animated.View>
-              </View>
+              <CardHeader
+                correct={correct}
+                total={total}
+                index={index}
+                title={card.title}
+              />
+              {body}
             </View>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                style={[styles.button,
-                        {backgroundColor: green, borderColor: darkgreen}]}
-                onPress={() => (
-                  this.answerAndGo(dispatch, navigation)
-                )}>
-                <Text style={styles.buttonText}>Correct</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.button,
-                        {backgroundColor: red, borderColor: darkred}]}
-                onPress={() => (
-                  this.answerAndGo(dispatch, navigation)
-                )}>
-                <Text style={styles.buttonText}>Incorrect</Text>
-              </TouchableOpacity>
-            </View>
+            { !finished &&
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  style={[styles.button,
+                          {backgroundColor: green, borderColor: darkgreen}]}
+                  onPress={() => (
+                    this.answerAndGo(
+                      card.answer === true,
+                      total)
+                  )}>
+                  <Text style={styles.buttonText}>Correct</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.button,
+                          {backgroundColor: red, borderColor: darkred}]}
+                  onPress={() => (
+                    this.answerAndGo(
+                      card.answer === false,
+                      total)
+                  )}>
+                  <Text style={styles.buttonText}>Incorrect</Text>
+                </TouchableOpacity>
+              </View>
+            }
           </View>
         }
       </View>
@@ -148,31 +124,12 @@ const styles = StyleSheet.create({
     height: '60%',
     alignItems: 'center',
   },
-  header: {
-    flexDirection: 'row',
-    marginBottom: 20,
-  },
-  headerText: {
-    paddingLeft: 0,
-    paddingRight: 50,
-    fontSize: 15,
-    color: gray3,
-  },
-  flipCard: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  cardQuestion: {
+  done: {
     fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 15,
     color: gray1,
-  },
-  cardAnswer: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: red,
   },
   buttonContainer: {
     height: '40%',
