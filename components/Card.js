@@ -156,7 +156,6 @@ function mapStateToProps (deckData) {
   return {
     entries: deckData.entries,
     deckId: deckData.deckId,
-    cardNo: deckData.cardNo,
   }
 }
 
