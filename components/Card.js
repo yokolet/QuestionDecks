@@ -62,7 +62,7 @@ class Card extends Component {
                 correct={correct}
                 total={total}
                 index={index}
-                title={card.title}
+                category={card.category}
               />
               {body}
             </View>

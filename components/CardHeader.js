@@ -6,13 +6,13 @@ import {
 } from 'react-native'
 import { black, gray3 } from '../utils/colors'
 
-export default function CardHeader ({correct, total, index, title}) {
+export default function CardHeader ({correct, total, index, category}) {
   let progress = correct + '/' + total
   let cardLeft = (total - index)
   return (
     <View style={styles.header}>
       <Text style={styles.headerText}>Progress {progress}</Text>
-      <Text style={[styles.headerText, {color: black}]}>{title}</Text>
+      <Text style={[styles.headerText, {color: black}]}>{category}</Text>
       <Text style={[styles.headerText, {paddingRight: 0}]}>{cardLeft} Left</Text>
     </View>
   )

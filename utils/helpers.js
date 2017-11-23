@@ -1,21 +1,21 @@
-export function getDeckMetaInfo (deck) {
-  const info = {
+export function getDeckEntries (deck) {
+  const entries = {
     'e4a40b75-34e5-42af-aaed-0353b5e1bfc2': {
       id: 'e4a40b75-34e5-42af-aaed-0353b5e1bfc2',
       name: 'udacicards',
       cards: [
         {
-          title: 'React',
+          category: 'React',
           question: 'Does React Native work with Android?',
           answer: true,
         },
         {
-          title: 'React',
+          category: 'React',
           question: 'React is a library for mamanging user interfaces',
           answer: true,
         },
         {
-          title: 'JavaScript',
+          category: 'JavaScript',
           question: 'A closure is a combination of a function in the lexical environment',
           answer: true,
         },
@@ -34,6 +34,6 @@ export function getDeckMetaInfo (deck) {
   }
 
   return typeof deck === 'undefined'
-    ? info
-    : info[deck]
+    ? entries
+    : entries[deck]
 }
