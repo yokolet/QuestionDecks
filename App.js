@@ -11,6 +11,7 @@ import DeckList from './components/DeckList'
 import Deck from './components/Deck'
 import Card from './components/Card'
 import NewDeck from './components/NewDeck'
+import NewCard from './components/NewCard'
 
 const { StatusBarManager } = NativeModules
 function AppStatusBar ({backgroundColor, ...props}) {
@@ -79,6 +80,9 @@ const RootNavigator = StackNavigator({
   },
   Card: {
     screen: Card,
+  },
+  NewCard: {
+    screen: NewCard,
   }
 })
 

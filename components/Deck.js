@@ -1,5 +1,11 @@
 import React, { Component } from 'react'
-import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native'
 import { connect } from 'react-redux'
 import { purple, white, gray1, gray3, gray5, black } from '../utils/colors'
 
@@ -7,7 +13,10 @@ class Deck extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: `${navigation.state.params.current}`
   })
-  startQuizPress = (dispatch, navigation) => {
+  addCard = (navigation) => {
+    navigation.navigate('NewCard', {current: 'Add Card'})
+  }
+  startQuiz = (dispatch, navigation) => {
     navigation.navigate('Card', {current: 'Quiz'})
   }
   render () {
@@ -22,14 +31,15 @@ class Deck extends Component {
             <Text style={styles.deckInfo}>{entries[deckId].cards.length} cards</Text>
             <View style={styles.buttonContainer}>
             <TouchableOpacity
-              style={[styles.button, {backgroundColor: white}]}>
+              style={[styles.button, {backgroundColor: white}]}
+              onPress={() => this.addCard(navigation)}>
               <Text style={[styles.buttonText, {color: black}]}>Add Card</Text>
             </TouchableOpacity>
             { canStartQuize &&
               <TouchableOpacity
                 style={[styles.button, {backgroundColor: black}]}
                 onPress={() => (
-                  this.startQuizPress(dispatch, navigation)
+                  this.startQuiz(dispatch, navigation)
                 )}>
                 <Text style={[styles.buttonText, {color: white}]}>Start Quiz</Text>
               </TouchableOpacity>
