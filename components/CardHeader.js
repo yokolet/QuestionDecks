@@ -21,11 +21,12 @@ export default function CardHeader ({correct, total, index, title}) {
 const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     marginBottom: 20,
   },
   headerText: {
-    paddingLeft: 0,
-    paddingRight: 50,
+    paddingLeft: 5,
+    paddingRight: 15,
     fontSize: 15,
     color: gray3,
   },
