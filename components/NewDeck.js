@@ -1,19 +1,65 @@
 import React, { Component } from 'react'
-import { Dimensions, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { black, gray1, gray3, gray5, white } from '../utils/colors'
-import FormLabel from './FormLabel'
-import FormInput from './FormInput'
+import {
+  Dimensions,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
+} from 'react-native'
+import { connect } from 'react-redux'
+import { black, gray1, gray3, gray4, gray5, white } from '../utils/colors'
+import { addNewDeck } from '../actions'
 
 class NewDeck extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      onEdit: false,
+      text: 'Input deck title'
+    }
+  }
+  updateText = (input) => {
+    let text = this.state.onEdit
+      ? input
+      : input.slice(-1)
+    if (text.length === 0) {
+      this.setState({
+        ...this.state,
+        onEdit: false,
+        text: 'Input deck title',
+      })
+    } else {
+      this.setState({
+        ...this.state,
+        onEdit: true,
+        text,
+      })
+    }
+  }
+  createNewDeck = (title, dispatch, navigation) => {
+    dispatch(addNewDeck(title))
+    navigation.navigate('Home')
+  }
   render () {
+    const { dispatch, navigation } = this.props
     return (
       <View style={styles.container}>
         <View style={styles.deck}>
           <Text style={styles.deckTitle}>What is the title of your new deck?</Text>
-          <FormLabel label={'Deck Title'} />
-          <FormInput />
+          <Text style={styles.label}>Dock Title</Text>
+          <View style={styles.formContainer}>
+            <TextInput
+              style={[styles.input, {color: this.state.onEdit ? gray1 : gray4}]}
+              onChangeText={(input) => this.updateText(input)}
+              value={this.state.text}
+            >
+          </TextInput>
+          </View>
           <View style={styles.buttonContainer}>
             <TouchableOpacity
+              onPress={() => this.createNewDeck(this.state.text, dispatch, navigation)}
               style={[styles.button, {backgroundColor: black}]}>
               <Text style={[styles.buttonText, {color: white}]}>Submit</Text>
             </TouchableOpacity>
@@ -24,7 +70,7 @@ class NewDeck extends Component {
   }
 }
 
-const { height } = Dimensions.get('window')
+const { height, width } = Dimensions.get('window')
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -55,8 +101,37 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     color: gray1,
   },
+  label: {
+    marginLeft: 10,
+    marginTop: 15,
+    marginBottom: 1,
+    color: gray3,
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
   formContainer: {
-    flex: 1,
+    marginLeft: 10,
+    ...Platform.select({
+      ios: {
+        borderBottomColor: gray1,
+        borderBottomWidth: 1,
+      },
+    }),
+  },
+  input: {
+    ...Platform.select({
+      ios: {
+        minHeight: 36,
+        width: width,
+      },
+      android: {
+        minHeight: 46,
+        width: width - 30,
+      },
+    }),
+    color: gray4,
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   buttonContainer: {
     margin: 50,
@@ -75,7 +150,15 @@ const styles = StyleSheet.create({
   buttonText: {
     textAlign: 'center',
     fontSize: 15,
-  }
+  },
 });
 
-export default NewDeck
+function mapStateToProps (deckData) {
+  return {
+    entries: deckData.entries,
+  }
+}
+
+export default connect (
+  mapStateToProps,
+)(NewDeck)
