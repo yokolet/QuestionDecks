@@ -1,7 +1,6 @@
 import {
   RECEIVE_ENTRIES,
-  SET_CURRENT_DECK,
-  SET_CURRENT_CARD
+  SET_CURRENT_DECK
 } from '../actions'
 
 const initialState = {
@@ -20,11 +19,6 @@ function deckData (state = initialState, action) {
       return {
         ...state,
         deckId: action.deckId,
-      }
-    case SET_CURRENT_CARD :
-      return {
-        ...state,
-        cardNo: action.cardNo,
       }
     default :
       return state

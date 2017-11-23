@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { connect } from 'react-redux'
-import { setCurrentCard } from '../actions'
 import { purple, white, gray1, gray3, gray5, black } from '../utils/colors'
 
 class Deck extends Component {
@@ -10,7 +9,6 @@ class Deck extends Component {
   })
   startQuizPress = (dispatch, navigation) => {
     navigation.navigate('Card', {current: 'Quiz'})
-    dispatch(setCurrentCard(0))
   }
   render () {
     const { entries, deckId, dispatch, navigation } = this.props
