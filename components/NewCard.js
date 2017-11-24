@@ -34,7 +34,7 @@ class NewCard extends Component {
       },
       answer: {
         onEdit: false,
-        index: 0,
+        index: -1,
       },
     }
   }
