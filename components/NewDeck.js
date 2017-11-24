@@ -48,7 +48,7 @@ class NewDeck extends Component {
       <View style={styles.container}>
         <View style={styles.deck}>
           <Text style={styles.deckTitle}>What is the title of your new deck?</Text>
-          <Text style={styles.label}>Dock Title</Text>
+          <Text style={styles.label}>Deck Title</Text>
           <View style={styles.formContainer}>
             <TextInput
               style={[styles.input, {color: this.state.onEdit ? gray1 : gray4}]}
