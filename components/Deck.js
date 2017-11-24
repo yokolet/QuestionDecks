@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {
+  Dimensions,
   Platform,
   StyleSheet,
   Text,
@@ -52,11 +53,13 @@ class Deck extends Component {
   }
 }
 
+const { height } = Dimensions.get('window')
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
   deck: {
+    height: height,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: white,
