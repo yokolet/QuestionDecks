@@ -10,7 +10,11 @@ import {
   View
 } from 'react-native'
 import { connect } from 'react-redux'
-import { black, gray1, gray3, gray4, gray5, white, pink, beige } from '../utils/colors'
+import {
+  black, white,
+  gray1, gray3, gray4, gray5,
+  red, pink, beige
+} from '../utils/colors'
 
 class NewCard extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -79,18 +83,29 @@ class NewCard extends Component {
             >
             </TextInput>
           </View>
-          <Text style={styles.label}>Answer</Text>
-          {answers.map((answer, i) => {
-            return (
-              <TouchableHighlight
-                key={i}
-                style={[styles.button,
-                        { backgroundColor: this.state.answer.index === i ? pink : beige }]}
-              >
-                <Text style={{color: black}}>{answer ? 'Yes!' : 'No'}</Text>
-              </TouchableHighlight>
-            )
-          })}
+          <View style={{flexDirection: 'row'}}>
+            <Text style={styles.label}>Answer</Text>
+            <Text style={[styles.label, {fontSize: 15, color: gray4}]}>Choose One</Text>
+          </View>
+          <View style={styles.buttonContainer}>
+            {answers.map((answer, i) => {
+              return (
+                <TouchableHighlight
+                  key={i}
+                  style={[styles.button,
+                          i === this.state.answer.index && {
+                            backgroundColor: pink,
+                            borderColor: red
+                          }]}
+                >
+                  <Text style={[styles.buttonText,
+                                i === this.state.answer.index && {color: white}]}>
+                    {answer ? 'Yes!' : 'No'}
+                  </Text>
+                </TouchableHighlight>
+              )
+            })}
+          </View>
         </View>
       </View>
     )
@@ -154,22 +169,30 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   buttonContainer: {
-    margin: 50,
-    marginTop: 100,
+    marginLeft: 10,
+    marginRight: 10,
+    marginBottom: 5,
+    marginTop: 5,
+    flexDirection: 'row',
+    borderRadius: 3,
+    overflow: 'hidden',
+    height: 40,
   },
   button: {
-    width: 200,
-    margin:10,
-    padding: 20,
+    flex: 1,
+    justifyContent: 'center',
     paddingLeft: 50,
     paddingRight: 50,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: black,
+    backgroundColor: beige,
+    borderColor: gray5,
   },
   buttonText: {
     textAlign: 'center',
     fontSize: 15,
+    fontWeight: 'bold',
+    color: gray4
   },
 });
 
