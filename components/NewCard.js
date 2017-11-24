@@ -68,7 +68,11 @@ class NewCard extends Component {
       },
     })
   }
+  createNewCard = (title, dispatch, navigation) => {
+    navigation.navigate('Deck', {current: title})
+  }
   render () {
+    const { entries, deckId, dispatch, navigation } = this.props
     const answers = [true, false]
     const buttons = ['Yes!', 'No']
     return (
@@ -115,6 +119,13 @@ class NewCard extends Component {
                 </TouchableHighlight>
               )
             })}
+          </View>
+          <View style={styles.submitContainer}>
+            <TouchableOpacity
+              onPress={() => this.createNewCard(entries[deckId].name, dispatch, navigation)}
+              style={[styles.submitButton, {backgroundColor: black}]}>
+              <Text style={[styles.buttonText, {color: white}]}>Submit</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -205,11 +216,26 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: gray4
   },
+  submitContainer: {
+    margin: 50,
+    marginTop: 100,
+  },
+  submitButton: {
+    width: 200,
+    margin:10,
+    padding: 20,
+    paddingLeft: 50,
+    paddingRight: 50,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: black,
+  },
 });
 
 function mapStateToProps (deckData) {
   return {
     entries: deckData.entries,
+    deckId: deckData.deckId,
   }
 }
 
