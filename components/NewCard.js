@@ -59,6 +59,15 @@ class NewCard extends Component {
       })
     }
   }
+  updateIndex = (index) => {
+    this.setState({
+      ...this.state,
+      answer: {
+        onEdit: true,
+        index,
+      },
+    })
+  }
   render () {
     const answers = [true, false]
     const buttons = ['Yes!', 'No']
@@ -97,6 +106,7 @@ class NewCard extends Component {
                             backgroundColor: pink,
                             borderColor: red
                           }]}
+                  onPress={() => this.updateIndex(i)}
                 >
                   <Text style={[styles.buttonText,
                                 i === this.state.answer.index && {color: white}]}>
@@ -181,6 +191,7 @@ const styles = StyleSheet.create({
   button: {
     flex: 1,
     justifyContent: 'center',
+    margin: 1,
     paddingLeft: 50,
     paddingRight: 50,
     borderRadius: 10,
