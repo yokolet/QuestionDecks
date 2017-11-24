@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {
+  Dimensions,
   Platform,
   StyleSheet,
   Text,
@@ -97,6 +98,7 @@ class Card extends Component {
   }
 }
 
+const { height } = Dimensions.get('window')
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -104,7 +106,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: white,
     borderColor: gray5,
-    height: '90%',
+    height,
     borderWidth: 1,
     padding: 30,
     margin: 5,
@@ -134,7 +136,6 @@ const styles = StyleSheet.create({
   buttonContainer: {
     height: '40%',
     alignItems: 'center',
-    margin: 50,
   },
   button: {
     width: 200,
