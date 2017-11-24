@@ -1,7 +1,8 @@
 import {
   RECEIVE_ENTRIES,
   SET_CURRENT_DECK,
-  ADD_NEW_DECK
+  ADD_NEW_DECK,
+  ADD_NEW_CARD
 } from '../actions'
 
 const initialState = {
@@ -22,13 +23,25 @@ function deckData (state = initialState, action) {
       }
     case ADD_NEW_DECK :
       let id = action.id
-      console.log('ADD_NEW_DECK reducer')
-      console.log(id)
       return {
         ...state,
         entries: {
           ...state.entries,
           [id]: { id, name: action.name, cards: [] }
+        }
+      }
+    case ADD_NEW_CARD :
+      let deck = state.entries[action.deckId]
+      let cards = deck.cards
+      cards.push(action.card)
+      return {
+        ...state,
+        entries: {
+          ...state.entries,
+          [action.deckId]: {
+            ...deck,
+            cards,
+          }
         }
       }
     default :

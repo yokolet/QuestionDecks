@@ -15,6 +15,7 @@ import {
   gray1, gray3, gray4, gray5,
   red, pink, beige
 } from '../utils/colors'
+import { addNewCard } from '../actions'
 
 class NewCard extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -68,7 +69,13 @@ class NewCard extends Component {
       },
     })
   }
-  createNewCard = (title, dispatch, navigation) => {
+  createNewCard = (deckId, title, dispatch, navigation) => {
+    let card = {
+      category: this.state.category.text,
+      question: this.state.question.text,
+      answer: this.state.answer.index === 0 ? true : false
+    }
+    dispatch(addNewCard(deckId, card))
     navigation.navigate('Deck', {current: title})
   }
   render () {
@@ -122,7 +129,7 @@ class NewCard extends Component {
           </View>
           <View style={styles.submitContainer}>
             <TouchableOpacity
-              onPress={() => this.createNewCard(entries[deckId].name, dispatch, navigation)}
+              onPress={() => this.createNewCard(deckId, entries[deckId].name, dispatch, navigation)}
               style={[styles.submitButton, {backgroundColor: black}]}>
               <Text style={[styles.buttonText, {color: white}]}>Submit</Text>
             </TouchableOpacity>
