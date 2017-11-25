@@ -9,7 +9,11 @@ import {
   View
 } from 'react-native'
 import { connect } from 'react-redux'
-import { black, gray1, gray3, gray4, gray5, white } from '../utils/colors'
+import {
+  white, black,
+  gray1, gray3, gray4, gray5,
+  red
+} from '../utils/colors'
 import { addNewDeck } from '../actions'
 
 class NewDeck extends Component {
@@ -17,7 +21,8 @@ class NewDeck extends Component {
     super(props)
     this.state = {
       onEdit: false,
-      text: 'Input deck title'
+      text: 'Input deck title',
+      valid: true,
     }
   }
   updateText = (input) => {
@@ -39,8 +44,21 @@ class NewDeck extends Component {
     }
   }
   createNewDeck = (title, dispatch, navigation) => {
-    dispatch(addNewDeck(title))
-    navigation.navigate('Home')
+    if (this.state.onEdit) {
+      dispatch(addNewDeck(title))
+      navigation.navigate('Home')
+      this.setState({
+        onEdit: false,
+        text: 'Input deck title',
+        valid: true,
+      })
+    } else {
+      this.setState({
+        ...this.state,
+        valid: false,
+      })
+    }
+
   }
   render () {
     const { dispatch, navigation } = this.props
@@ -55,8 +73,11 @@ class NewDeck extends Component {
               onChangeText={(input) => this.updateText(input)}
               value={this.state.text}
             >
-          </TextInput>
+            </TextInput>
           </View>
+          <Text style={[styles.error, {color: this.state.valid ? white : red}]}>
+            Deck Title should not be empty
+          </Text>
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               onPress={() => this.createNewDeck(this.state.text, dispatch, navigation)}
@@ -132,6 +153,12 @@ const styles = StyleSheet.create({
     color: gray4,
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  error: {
+    marginLeft: 10,
+    marginTop: 5,
+    marginBottom: 1,
+    fontSize: 15,
   },
   buttonContainer: {
     margin: 50,
