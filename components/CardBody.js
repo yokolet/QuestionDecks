@@ -7,10 +7,18 @@ import {
   View
 } from 'react-native'
 import { connect } from 'react-redux'
-import { white, black, green, darkgreen, red, darkred, gray1, gray3, gray5 } from '../utils/colors'
+import {
+  white, black,
+  gray1, gray3, gray5,
+  green, darkgreen, red, darkred
+} from '../utils/colors'
 
 class CardBody extends Component {
-  componentWillMount() {
+  state = {
+    index: -1,
+    frontface: true,
+  }
+  initialize() {
     this.animatedValue = new Animated.Value(0)
     this.value = 0
     this.animatedValue.addListener(({ value }) => {
@@ -25,7 +33,20 @@ class CardBody extends Component {
       outputRange: ['180deg', '360deg'],
     })
   }
+  componentWillMount() {
+    this.initialize()
+  }
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      index: nextProps.index,
+      frontface: true,
+    })
+    this.initialize()
+  }
   flipCard() {
+    this.setState({
+      frontface: !this.state.frontface,
+    })
     if (this.value >= 90) {
       Animated.spring(this.animatedValue, {
         toValue: 0,
@@ -52,10 +73,9 @@ class CardBody extends Component {
         { rotateY: this.backInterpolate }
       ]
     }
-    const { card } = this.props
-    return (
-      <View style={styles.flipCard}>
-        <Animated.View
+    const { card, index } = this.props
+    let face = this.state.frontface
+      ? <Animated.View
           style={[frontAnimatedStyle, {backfaceVisibility: 'hidden'}]}>
           <Text style={styles.cardQuestion}>{card.question}</Text>
           <TouchableOpacity
@@ -64,7 +84,7 @@ class CardBody extends Component {
             <Text style={styles.cardAnswer}>Answer</Text>
           </TouchableOpacity>
         </Animated.View>
-        <Animated.View
+      : <Animated.View
           style={[backAnimatedStyle, {backfaceVisibility: 'hidden', position: 'absolute'}]}>
           <Text style={styles.cardQuestion}>
             {card.answer ? 'Yes!' : 'No'}
@@ -75,6 +95,10 @@ class CardBody extends Component {
             <Text style={styles.cardAnswer}>Question</Text>
           </TouchableOpacity>
         </Animated.View>
+
+    return (
+      <View style={styles.flipCard}>
+        {face}
       </View>
     )
   }

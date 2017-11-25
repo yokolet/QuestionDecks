@@ -53,7 +53,7 @@ class Card extends Component {
     let card = finished ? {} : entries[deckId].cards[index]
     let body = finished
       ? <View><Text style={styles.done}>DONE!</Text></View>
-      : <CardBody card={card}/>
+      : <CardBody card={card} index={this.state.index}/>
     return (
       <View style={styles.container}>
         {entries && deckId &&
