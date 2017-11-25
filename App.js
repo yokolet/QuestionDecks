@@ -22,22 +22,6 @@ function AppStatusBar ({backgroundColor, ...props}) {
   )
 }
 
-const HomeScreen = ({ navigation }) => (
-  <View style={styles.container}>
-    <Text>Home Screen</Text>
-    <Button
-      onPress={() => navigation.navigate('Details')}
-      title="Go to details"
-    />
-  </View>
-)
-
-const DetailsScreen = () => (
-  <View style={styles.container}>
-    <Text>Details Screen</Text>
-  </View>
-)
-
 const RootTabs = TabNavigator({
   Home: {
     screen: DeckList,
