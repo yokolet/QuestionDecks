@@ -16,7 +16,7 @@ function formatDeckResults (results) {
 }
 
 export function fetchDeckEntries () {
-  AsyncStorage.clear()
+  //AsyncStorage.clear()
   return AsyncStorage.getItem(DECK_STORAGE_KEY)
     .then((results) => formatDeckResults(results))
 }
