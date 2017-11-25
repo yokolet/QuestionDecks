@@ -22,6 +22,6 @@ This app has a starter decks and questions to see how the app works.
 
 ## references
 
-- [https://facebook.github.io/react-native/docs/getting-started.html]
-- [https://github.com/react-native-training/react-native-elements/]
-- [https://codedaily.io/screencasts/12/Create-a-Flip-Card-Animation-with-React-Native]
+- [React Native Docs](https://facebook.github.io/react-native/docs/getting-started.html)
+- [react-native-elements](https://github.com/react-native-training/react-native-elements/)
+- [Create a Fip Card Animation with React Native](https://codedaily.io/screencasts/12/Create-a-Flip-Card-Animation-with-React-Native)
