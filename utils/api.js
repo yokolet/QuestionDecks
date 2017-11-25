@@ -20,15 +20,3 @@ export function fetchDeckEntries () {
   return AsyncStorage.getItem(DECK_STORAGE_KEY)
     .then((results) => formatDeckResults(results))
 }
-
-function deckEntries (results, deckId) {
-  let data = JSON.parse(results)
-  return deckId === null
-    ? data
-    : data[deckId]
-}
-
-export function fetchDeck (deckId) {
-  return AsyncStorage.getItem(DECK_STORAGE_KEY)
-    .then((results) => deckEntries(results, deckId))
-}
