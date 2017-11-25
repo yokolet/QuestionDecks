@@ -36,6 +36,11 @@ class NewCard extends Component {
         onEdit: false,
         index: -1,
       },
+      validity: {
+        category: true,
+        question: true,
+        answer: true,
+      }
     }
   }
   updateText = (type, input) => {
@@ -70,14 +75,28 @@ class NewCard extends Component {
     })
   }
   createNewCard = (deckId, title, dispatch, navigation) => {
-    let card = {
-      category: this.state.category.text,
-      question: this.state.question.text,
-      answer: this.state.answer.index === 0 ? true : false
+    if (this.state.category.onEdit
+    && this.state.question.onEdit
+    && this.state.answer.onEdit) {
+      let card = {
+        category: this.state.category.text,
+        question: this.state.question.text,
+        answer: this.state.answer.index === 0 ? true : false
+      }
+      dispatch(addNewCard(deckId, card))
+      navigation.navigate('Deck', {current: title})
+    } else {
+      this.setState({
+        ...this.state,
+        validity: {
+          category: this.state.category.onEdit,
+          question: this.state.question.onEdit,
+          answer: this.state.answer.onEdit,
+        }
+      })
     }
-    dispatch(addNewCard(deckId, card))
-    navigation.navigate('Deck', {current: title})
   }
+
   render () {
     const { entries, deckId, dispatch, navigation } = this.props
     const answers = [true, false]
@@ -94,6 +113,9 @@ class NewCard extends Component {
             >
             </TextInput>
           </View>
+          <Text style={[styles.error, {color: this.state.validity.category ? white : red}]}>
+            Category should not be empty
+          </Text>
           <Text style={styles.label}>Question</Text>
           <View style={styles.formContainer}>
             <TextInput
@@ -103,6 +125,9 @@ class NewCard extends Component {
             >
             </TextInput>
           </View>
+          <Text style={[styles.error, {color: this.state.validity.question ? white : red}]}>
+            Question should not be empty
+          </Text>
           <View style={{flexDirection: 'row'}}>
             <Text style={styles.label}>Answer</Text>
             <Text style={[styles.label, {fontSize: 15, color: gray4}]}>Choose One</Text>
@@ -127,6 +152,9 @@ class NewCard extends Component {
               )
             })}
           </View>
+          <Text style={[styles.error, {color: this.state.validity.answer ? white : red}]}>
+            One of answers should be selected
+          </Text>
           <View style={styles.submitContainer}>
             <TouchableOpacity
               onPress={() => this.createNewCard(deckId, entries[deckId].name, dispatch, navigation)}
@@ -195,6 +223,12 @@ const styles = StyleSheet.create({
     color: gray4,
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  error: {
+    marginLeft: 10,
+    marginTop: 5,
+    marginBottom: 1,
+    fontSize: 15,
   },
   buttonContainer: {
     marginLeft: 10,
