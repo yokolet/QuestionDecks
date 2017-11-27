@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Button, Text, View, StatusBar, NativeModules, Platform } from 'react-native'
+import { StyleSheet, View, StatusBar, NativeModules } from 'react-native'
 import { white, purple } from './utils/colors'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'

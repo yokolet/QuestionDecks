@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {
   Dimensions,
   Platform,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -103,7 +104,7 @@ class NewCard extends Component {
     const buttons = ['Yes!', 'No']
     return (
       <View style={styles.container}>
-        <View style={styles.card}>
+        <ScrollView style={styles.card}>
           <Text style={styles.label}>Category</Text>
           <View style={styles.formContainer}>
             <TextInput
@@ -162,7 +163,7 @@ class NewCard extends Component {
               <Text style={[styles.buttonText, {color: white}]}>Submit</Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </ScrollView>
       </View>
     )
   }
