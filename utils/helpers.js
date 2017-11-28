@@ -1,4 +1,4 @@
-export function getDeckEntries (deck) {
+export const getDeckEntries = (deck) => {
   const entries = {
     'e4a40b75-34e5-42af-aaed-0353b5e1bfc2': {
       id: 'e4a40b75-34e5-42af-aaed-0353b5e1bfc2',

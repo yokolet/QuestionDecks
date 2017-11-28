@@ -14,7 +14,7 @@ import NewDeck from './components/NewDeck'
 import NewCard from './components/NewCard'
 
 const { StatusBarManager } = NativeModules
-function AppStatusBar ({backgroundColor, ...props}) {
+AppStatusBar = ({backgroundColor, ...props}) => {
   return (
     <View style={{ backgroundColor, height: StatusBarManager.HEIGHT }}>
       <StatusBar translucent backgroundColor={backgroundColor} {...props} />
@@ -70,7 +70,7 @@ const RootNavigator = StackNavigator({
   }
 })
 
-function configureStore(initState) {
+configureStore = (initState) => {
   return createStore(
     reducer,
     initState,
