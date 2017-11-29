@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native'
+import { FormLabel, FormInput } from 'react-native-elements'
 import { connect } from 'react-redux'
 import {
   white, black,
@@ -66,15 +67,11 @@ class NewDeck extends Component {
       <View style={styles.container}>
         <View style={styles.deck}>
           <Text style={styles.deckTitle}>What is the title of your new deck?</Text>
-          <Text style={styles.label}>Deck Title</Text>
-          <View style={styles.formContainer}>
-            <TextInput
-              style={[styles.input, {color: this.state.onEdit ? gray1 : gray4}]}
-              onChangeText={(input) => this.updateText(input)}
-              value={this.state.text}
-            >
-            </TextInput>
-          </View>
+          <FormLabel>Deck Title</FormLabel>
+          <FormInput
+            onChangeText={(input) => this.updateText(input)}
+            value={this.state.text}
+          />
           <Text style={[styles.error, {color: this.state.valid ? white : red}]}>
             Deck Title should not be empty
           </Text>
@@ -116,60 +113,29 @@ const styles = StyleSheet.create({
     })
   },
   deckTitle: {
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 15,
     color: gray1,
   },
-  label: {
-    marginLeft: 10,
-    marginTop: 15,
-    marginBottom: 1,
-    color: gray3,
-    fontSize: 15,
-    fontWeight: 'bold',
-  },
-  formContainer: {
-    marginLeft: 10,
-    ...Platform.select({
-      ios: {
-        borderBottomColor: gray1,
-        borderBottomWidth: 1,
-      },
-    }),
-  },
-  input: {
-    ...Platform.select({
-      ios: {
-        minHeight: 36,
-        width: width,
-      },
-      android: {
-        minHeight: 46,
-        width: width - 30,
-      },
-    }),
-    color: gray4,
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
   error: {
-    marginLeft: 10,
+    marginLeft: 20,
+    marginRight: 20,
     marginTop: 5,
     marginBottom: 1,
-    fontSize: 15,
+    fontSize: 12,
   },
   buttonContainer: {
-    margin: 50,
-    marginTop: 100,
+    alignItems: 'center',
   },
   button: {
-    width: 200,
-    margin:10,
-    padding: 20,
-    paddingLeft: 50,
-    paddingRight: 50,
+    justifyContent: 'center',
+    width: 150,
+    height: 50,
+    margin: 10,
+    paddingLeft: 30,
+    paddingRight: 30,
     borderRadius: 10,
     borderWidth: 1,
     borderColor: black,
