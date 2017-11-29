@@ -76,7 +76,7 @@ class NewCard extends Component {
       },
     })
   }
-  createNewCard = (deckId, title, dispatch, navigation) => {
+  createNewCard = (deckId, title) => {
     if (this.state.category.onEdit
     && this.state.question.onEdit
     && this.state.answer.onEdit) {
@@ -85,8 +85,8 @@ class NewCard extends Component {
         question: this.state.question.text,
         answer: this.state.answer.index === 0 ? true : false
       }
-      dispatch(addNewCard(deckId, card))
-      navigation.navigate('Deck', {current: title})
+      this.props.addNewCard(deckId, card)
+      this.props.navigation.navigate('Deck', {current: title})
     } else {
       this.setState({
         ...this.state,
@@ -100,7 +100,7 @@ class NewCard extends Component {
   }
 
   render () {
-    const { entries, deckId, dispatch, navigation } = this.props
+    const { entries, deckId } = this.props
     const answers = [true, false]
     const buttons = ['Yes!', 'No']
     return (
@@ -153,7 +153,7 @@ class NewCard extends Component {
           </Text>
           <View style={styles.submitContainer}>
             <TouchableOpacity
-              onPress={() => this.createNewCard(deckId, entries[deckId].name, dispatch, navigation)}
+              onPress={() => this.createNewCard(deckId, entries[deckId].name)}
               style={[styles.submitButton, {backgroundColor: gray1}]}>
               <Text style={[styles.buttonText, {color: white}]}>Submit</Text>
             </TouchableOpacity>
@@ -247,4 +247,5 @@ function mapStateToProps (deckData) {
 
 export default connect (
   mapStateToProps,
+  { addNewCard }
 )(NewCard)
