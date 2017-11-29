@@ -86,7 +86,7 @@ class NewCard extends Component {
         answer: this.state.answer.index === 0 ? true : false
       }
       this.props.addNewCard(deckId, card)
-      this.props.navigation.navigate('Deck', {current: title})
+      this.props.navigation.goBack()
     } else {
       this.setState({
         ...this.state,
