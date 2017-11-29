@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native'
+import { FormLabel, FormInput } from 'react-native-elements'
 import { connect } from 'react-redux'
 import {
   black, white,
@@ -105,33 +106,27 @@ class NewCard extends Component {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.card}>
-          <Text style={styles.label}>Category</Text>
-          <View style={styles.formContainer}>
-            <TextInput
-              style={[styles.input, {color: this.state.category.onEdit ? gray1 : gray4}]}
-              onChangeText={(input) => this.updateText('category', input)}
-              value={this.state.category.text}
-            >
-            </TextInput>
-          </View>
+          <FormLabel>Category</FormLabel>
+          <FormInput
+            onChangeText={(input) => this.updateText('category', input)}
+            value={this.state.category.text}
+          >
+          </FormInput>
           <Text style={[styles.error, {color: this.state.validity.category ? white : red}]}>
             Category should not be empty
           </Text>
-          <Text style={styles.label}>Question</Text>
-          <View style={styles.formContainer}>
-            <TextInput
-              style={[styles.input, {color: this.state.question.onEdit ? gray1 : gray4}]}
-              onChangeText={(input) => this.updateText('question', input)}
-              value={this.state.question.text}
-            >
-            </TextInput>
-          </View>
+          <FormLabel>Question</FormLabel>
+          <FormInput
+            onChangeText={(input) => this.updateText('question', input)}
+            value={this.state.question.text}
+          >
+          </FormInput>
           <Text style={[styles.error, {color: this.state.validity.question ? white : red}]}>
             Question should not be empty
           </Text>
           <View style={{flexDirection: 'row'}}>
-            <Text style={styles.label}>Answer</Text>
-            <Text style={[styles.label, {fontSize: 15, color: gray4}]}>Choose One</Text>
+            <FormLabel>Answer</FormLabel>
+            <FormLabel labelStyle={{color: gray4}}>Choose One</FormLabel>
           </View>
           <View style={styles.buttonContainer}>
             {answers.map((answer, i) => {
@@ -159,7 +154,7 @@ class NewCard extends Component {
           <View style={styles.submitContainer}>
             <TouchableOpacity
               onPress={() => this.createNewCard(deckId, entries[deckId].name, dispatch, navigation)}
-              style={[styles.submitButton, {backgroundColor: black}]}>
+              style={[styles.submitButton, {backgroundColor: gray1}]}>
               <Text style={[styles.buttonText, {color: white}]}>Submit</Text>
             </TouchableOpacity>
           </View>
@@ -193,43 +188,12 @@ const styles = StyleSheet.create({
       },
     })
   },
-  label: {
-    marginLeft: 10,
-    marginTop: 15,
-    marginBottom: 1,
-    color: gray3,
-    fontSize: 15,
-    fontWeight: 'bold',
-  },
-  formContainer: {
-    marginLeft: 10,
-    ...Platform.select({
-      ios: {
-        borderBottomColor: gray1,
-        borderBottomWidth: 1,
-      },
-    }),
-  },
-  input: {
-    ...Platform.select({
-      ios: {
-        minHeight: 36,
-        width: width,
-      },
-      android: {
-        minHeight: 46,
-        width: width - 30,
-      },
-    }),
-    color: gray4,
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
   error: {
-    marginLeft: 10,
-    marginTop: 5,
+    marginLeft: 20,
+    marginRight: 20,
+    marginTop: 2,
     marginBottom: 1,
-    fontSize: 15,
+    fontSize: 12,
   },
   buttonContainer: {
     marginLeft: 10,
@@ -259,15 +223,15 @@ const styles = StyleSheet.create({
     color: gray4
   },
   submitContainer: {
-    margin: 50,
-    marginTop: 100,
+    alignItems: 'center',
   },
   submitButton: {
-    width: 200,
+    justifyContent: 'center',
+    width: 150,
+    height: 50,
     margin:10,
-    padding: 20,
-    paddingLeft: 50,
-    paddingRight: 50,
+    paddingLeft: 30,
+    paddingRight: 30,
     borderRadius: 10,
     borderWidth: 1,
     borderColor: black,
