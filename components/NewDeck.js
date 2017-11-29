@@ -44,10 +44,10 @@ class NewDeck extends Component {
       })
     }
   }
-  createNewDeck = (title, dispatch, navigation) => {
+  createNewDeck = (title) => {
     if (this.state.onEdit) {
-      dispatch(addNewDeck(title))
-      navigation.navigate('Home')
+      this.props.addNewDeck(title)
+      this.props.navigation.navigate('Home')
       this.setState({
         onEdit: false,
         text: 'Input deck title',
@@ -62,7 +62,6 @@ class NewDeck extends Component {
 
   }
   render () {
-    const { dispatch, navigation } = this.props
     return (
       <View style={styles.container}>
         <View style={styles.deck}>
@@ -77,7 +76,7 @@ class NewDeck extends Component {
           </Text>
           <View style={styles.buttonContainer}>
             <TouchableOpacity
-              onPress={() => this.createNewDeck(this.state.text, dispatch, navigation)}
+              onPress={() => this.createNewDeck(this.state.text)}
               style={[styles.button, {backgroundColor: black}]}>
               <Text style={[styles.buttonText, {color: white}]}>Submit</Text>
             </TouchableOpacity>
@@ -155,4 +154,5 @@ function mapStateToProps (deckData) {
 
 export default connect (
   mapStateToProps,
+  { addNewDeck }
 )(NewDeck)
