@@ -77,7 +77,7 @@ class NewDeck extends Component {
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               onPress={() => this.createNewDeck(this.state.text)}
-              style={[styles.button, {backgroundColor: black}]}>
+              style={[styles.button, {backgroundColor: gray1}]}>
               <Text style={[styles.buttonText, {color: white}]}>Submit</Text>
             </TouchableOpacity>
           </View>
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   deck: {
-    height: height * 0.8,
+    height: height,
     backgroundColor: white,
     borderColor: gray5,
     borderWidth: 1,
