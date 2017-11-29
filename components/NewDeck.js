@@ -47,7 +47,7 @@ class NewDeck extends Component {
   createNewDeck = (title) => {
     if (this.state.onEdit) {
       this.props.addNewDeck(title)
-      this.props.navigation.navigate('Home')
+      this.props.navigation.navigate('Deck', {current: title})
       this.setState({
         onEdit: false,
         text: 'Input deck title',

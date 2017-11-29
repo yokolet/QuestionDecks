@@ -28,7 +28,8 @@ function deckData (state = initialState, action) {
         entries: {
           ...state.entries,
           [id]: { id, name: action.name, cards: [] }
-        }
+        },
+        deckId: action.id,
       }
     case ADD_NEW_CARD :
       let deck = state.entries[action.deckId]
