@@ -11,6 +11,8 @@ import { connect } from 'react-redux'
 import { white, green, darkgreen, red, darkred, gray1, gray5 } from '../utils/colors'
 import CardHeader from './CardHeader'
 import CardBody from './CardBody'
+import { CardButtons } from './CardButtons'
+import { CardResultButtons } from './CardResultButtons'
 
 class Card extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -46,6 +48,16 @@ class Card extends Component {
       })
     }
   }
+  restartQuiz = () => {
+    this.setState({
+      index: 0,
+      correct: 0,
+      finished: false,
+    })
+  }
+  backToDeck = (deckName) => {
+    this.props.navigation.navigate('Deck', {current: deckName})
+  }
   render () {
     const { entries, deckId, navigation } = this.props
     const { index, correct, finished } = this.state
@@ -54,6 +66,9 @@ class Card extends Component {
     let body = finished
       ? <View><Text style={styles.done}>DONE!</Text></View>
       : <CardBody card={card} index={this.state.index}/>
+    let buttons = finished
+      ? CardResultButtons(entries[deckId].name, this.restartQuiz, this.backToDeck)
+      : CardButtons(total, card.answer, this.answerAndGo)
     return (
       <View style={styles.container}>
         {entries && deckId &&
@@ -67,30 +82,7 @@ class Card extends Component {
               />
               {body}
             </View>
-            { !finished &&
-              <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                  style={[styles.button,
-                          {backgroundColor: green, borderColor: darkgreen}]}
-                  onPress={() => (
-                    this.answerAndGo(
-                      card.answer === true,
-                      total)
-                  )}>
-                  <Text style={styles.buttonText}>Correct</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={[styles.button,
-                          {backgroundColor: red, borderColor: darkred}]}
-                  onPress={() => (
-                    this.answerAndGo(
-                      card.answer === false,
-                      total)
-                  )}>
-                  <Text style={styles.buttonText}>Incorrect</Text>
-                </TouchableOpacity>
-              </View>
-            }
+            {buttons}
           </View>
         }
       </View>
