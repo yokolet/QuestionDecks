@@ -48,7 +48,7 @@ class Card extends Component {
     }
   }
   render () {
-    const { entries, deckId, dispatch, navigation } = this.props
+    const { entries, deckId, navigation } = this.props
     const { index, correct, finished } = this.state
     let total = entries[deckId].cards.length
     let card = finished ? {} : entries[deckId].cards[index]
