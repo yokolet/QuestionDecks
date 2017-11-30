@@ -11,6 +11,7 @@ import { connect } from 'react-redux'
 import { white, green, darkgreen, red, darkred, gray1, gray5 } from '../utils/colors'
 import CardHeader from './CardHeader'
 import CardBody from './CardBody'
+import { CardResult } from './CardResult'
 import { CardButtons } from './CardButtons'
 import { CardResultButtons } from './CardResultButtons'
 
@@ -64,7 +65,7 @@ class Card extends Component {
     let total = entries[deckId].cards.length
     let card = finished ? {} : entries[deckId].cards[index]
     let body = finished
-      ? <View><Text style={styles.done}>DONE!</Text></View>
+      ? CardResult(total, this.state.correct)
       : <CardBody card={card} index={this.state.index}/>
     let buttons = finished
       ? CardResultButtons(entries[deckId].name, this.restartQuiz, this.backToDeck)
