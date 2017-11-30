@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   View
 } from 'react-native'
-import FlipCard from 'react-native-flip-card'
 import { connect } from 'react-redux'
 import { white, green, darkgreen, red, darkred, gray1, gray5 } from '../utils/colors'
 import CardHeader from './CardHeader'
