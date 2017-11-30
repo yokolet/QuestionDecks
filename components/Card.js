@@ -104,6 +104,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   card: {
+    height: height,
     backgroundColor: white,
     borderColor: gray5,
     height,
@@ -138,12 +139,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-    width: 200,
-    margin:10,
-    padding: 20,
-    paddingLeft: 50,
-    paddingRight: 50,
+    justifyContent: 'center',
+    width: 150,
+    height: 50,
+    margin: 10,
+    paddingLeft: 30,
+    paddingRight: 30,
     borderRadius: 10,
+    borderWidth: 1,
   },
   buttonText: {
     textAlign: 'center',
