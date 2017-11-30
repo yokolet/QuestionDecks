@@ -3,12 +3,10 @@ import {
   Dimensions,
   Platform,
   StyleSheet,
-  Text,
-  TouchableOpacity,
   View
 } from 'react-native'
 import { connect } from 'react-redux'
-import { white, green, darkgreen, red, darkred, gray1, gray5 } from '../utils/colors'
+import { white, gray5 } from '../utils/colors'
 import CardHeader from './CardHeader'
 import CardBody from './CardBody'
 import { CardResult } from './CardResult'
@@ -120,33 +118,6 @@ const styles = StyleSheet.create({
     height: '60%',
     alignItems: 'center',
   },
-  done: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 15,
-    color: gray1,
-  },
-  buttonContainer: {
-    height: '40%',
-    alignItems: 'center',
-  },
-  button: {
-    justifyContent: 'center',
-    width: 150,
-    height: 50,
-    margin: 10,
-    paddingLeft: 30,
-    paddingRight: 30,
-    borderRadius: 10,
-    borderWidth: 1,
-  },
-  buttonText: {
-    textAlign: 'center',
-    fontSize: 15,
-    fontWeight: 'bold',
-    color: white,
-  }
 });
 
 function mapStateToProps (deckData) {
