@@ -41,6 +41,7 @@ class CardBody extends Component {
       <FlipCard
         style={styles.flipCard}
         flip={this.state.flip}
+        perspective={1000}
         flipHorizontal={true}
         flipVertical={false}
       >
