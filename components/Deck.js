@@ -8,6 +8,7 @@ import {
   View
 } from 'react-native'
 import { connect } from 'react-redux'
+import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
 import { purple, white, gray1, gray3, gray5, black } from '../utils/colors'
 
 class Deck extends Component {
@@ -18,6 +19,8 @@ class Deck extends Component {
     navigation.navigate('NewCard', {current: 'Add Card'})
   }
   startQuiz = (dispatch, navigation) => {
+    clearLocalNotification()
+      .then(setLocalNotification)
     navigation.navigate('Card', {current: 'Quiz'})
   }
   render () {

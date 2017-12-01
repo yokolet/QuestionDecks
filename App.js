@@ -4,6 +4,7 @@ import { white } from './utils/colors'
 import { store } from './config/ReduxStore'
 import { Provider } from 'react-redux'
 import { RootNavigator } from './components/Navigators'
+import { setLocalNotification } from './utils/helpers'
 
 const { StatusBarManager } = NativeModules
 AppStatusBar = ({backgroundColor, ...props}) => {
@@ -15,6 +16,9 @@ AppStatusBar = ({backgroundColor, ...props}) => {
 }
 
 export default class App extends React.Component {
+  componentDidMount() {
+    setLocalNotification()
+  }
   render() {
     return (
       <Provider store={store}>
