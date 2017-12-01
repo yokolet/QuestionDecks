@@ -44,7 +44,7 @@ export const commonStyles = StyleSheet.create({
   error: {
     marginLeft: 20,
     marginRight: 20,
-    marginTop: 5,
+    marginTop: 2,
     marginBottom: 1,
     fontSize: 12,
   },
