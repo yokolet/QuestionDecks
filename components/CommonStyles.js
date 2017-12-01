@@ -2,15 +2,13 @@ import {
   Platform,
   StyleSheet
 } from 'react-native'
-import { white, black, gray5 } from '../utils/colors'
+import { white, black, gray1, gray5 } from '../utils/colors'
 
 export const commonStyles = StyleSheet.create({
   container: {
     flex: 1,
   },
   base: {
-    alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: white,
     borderColor: gray5,
     borderWidth: 1,
@@ -37,6 +35,13 @@ export const commonStyles = StyleSheet.create({
     height: '40%',
     alignItems: 'center',
   },
+  title: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 15,
+    color: gray1,
+  },
   error: {
     marginLeft: 20,
     marginRight: 20,
@@ -56,7 +61,6 @@ export const commonStyles = StyleSheet.create({
     paddingRight: 30,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: black,
   },
   buttonText: {
     textAlign: 'center',

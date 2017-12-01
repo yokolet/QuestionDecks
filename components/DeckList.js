@@ -36,7 +36,7 @@ class DeckList extends Component {
             onPress={() => (
               this.deckPress(dispatch, navigation, entries, key)
             )}>
-            <View style={commonStyles.base}>
+            <View style={[commonStyles.base, styles.base]}>
               <Text style={styles.deckTitle}>{entries[key].name}</Text>
               <Text style={styles.deckInfo}>{entries[key].cards.length} cards</Text>
             </View>
@@ -48,6 +48,10 @@ class DeckList extends Component {
 }
 
 const styles = StyleSheet.create({
+  base: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   deckTitle: {
     fontSize: 30,
     fontWeight: 'bold',
