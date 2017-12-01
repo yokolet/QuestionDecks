@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import {
   Dimensions,
-  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -9,7 +8,8 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
-import { white, gray1, gray3, gray5, black } from '../utils/colors'
+import { white, gray1, gray3, black } from '../utils/colors'
+import { commonStyles } from './CommonStyles'
 
 class Deck extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -28,30 +28,30 @@ class Deck extends Component {
     let title = entries[deckId].name
     let canStartQuize = entries[deckId].cards.length > 0 ? true : false
     return (
-      <View style={styles.container}>
+      <View style={commonStyles.container}>
         {entries && deckId &&
-          <View style={styles.deck}>
-            <View style={styles.titleContainer}>
-              <Text style={styles.deckTitle}>{title}</Text>
+          <View style={[commonStyles.base, styles.base]}>
+            <View style={commonStyles.upperContainer}>
+              <Text style={[commonStyles.title, styles.title]}>{title}</Text>
               <Text style={styles.deckInfo}>
                 {entries[deckId].cards.length} cards
               </Text>
             </View>
-            <View style={styles.buttonContainer}>
+            <View style={commonStyles.lowerContainer}>
             <TouchableOpacity
-              style={[styles.button, {backgroundColor: white}]}
+              style={[commonStyles.button, styles.button, {backgroundColor: white}]}
               onPress={() => this.addCard(navigation)}>
-              <Text style={[styles.buttonText, {color: black}]}>
+              <Text style={[commonStyles.buttonText, {color: black}]}>
                 Add Card
               </Text>
             </TouchableOpacity>
             { canStartQuize &&
               <TouchableOpacity
-                style={[styles.button, {backgroundColor: gray1}]}
+                style={[commonStyles.button, styles.button, {backgroundColor: gray1}]}
                 onPress={() => (
                   this.startQuiz(dispatch, navigation)
                 )}>
-                <Text style={[styles.buttonText, {color: white}]}>
+                <Text style={[commonStyles.buttonText, {color: white}]}>
                   Start Quiz
                 </Text>
               </TouchableOpacity>
@@ -66,66 +66,22 @@ class Deck extends Component {
 
 const { height } = Dimensions.get('window')
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  deck: {
+  base: {
     height: height,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: white,
-    borderColor: gray5,
-    borderWidth: 1,
-    padding: 30,
-    margin: 5,
-    ...Platform.select({
-      ios: {
-        shadowColor: 'rgba(0, 0, 0, .2)',
-        shadowOffset:  { height: 0, width: 0 },
-        shadowOpacity: 1,
-        shadowRadius: 1,
-      },
-      android: {
-        elevation: 1,
-      },
-    })
   },
-  titleContainer: {
-    height: '60%',
-    alignItems: 'center',
-  },
-  deckTitle: {
+  title: {
     fontSize: 30,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 15,
-    color: gray1,
   },
   deckInfo: {
     fontSize: 20,
     fontWeight: 'bold',
     color: gray3,
   },
-  buttonContainer: {
-    height: '40%',
-    alignItems: 'center',
-  },
   button: {
-    justifyContent: 'center',
-    width: 150,
-    height: 50,
-    margin: 10,
-    paddingLeft: 30,
-    paddingRight: 30,
-    borderRadius: 10,
-    borderWidth: 1,
     borderColor: black,
   },
-  buttonText: {
-    textAlign: 'center',
-    fontSize: 15,
-    fontWeight: 'bold',
-  }
 });
 
 const mapStateToProps = (deckData) => {

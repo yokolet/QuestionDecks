@@ -36,7 +36,6 @@ export const commonStyles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 25,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 15,

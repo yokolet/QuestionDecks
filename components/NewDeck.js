@@ -61,7 +61,7 @@ class NewDeck extends Component {
     return (
       <View style={commonStyles.container}>
         <View style={[commonStyles.base, styles.base]}>
-          <Text style={commonStyles.title}>
+          <Text style={[commonStyles.title, styles.title]}>
             What is the title of your new deck?
           </Text>
           <FormLabel>Deck Title</FormLabel>
@@ -91,6 +91,9 @@ const { height, width } = Dimensions.get('window')
 const styles = StyleSheet.create({
   base: {
     height: height,
+  },
+  title: {
+    fontSize: 25,
   },
   button: {
     backgroundColor: gray1,
