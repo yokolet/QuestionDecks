@@ -9,7 +9,7 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
-import { purple, white, gray1, gray3, gray5, black } from '../utils/colors'
+import { white, gray1, gray3, gray5, black } from '../utils/colors'
 
 class Deck extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -31,21 +31,29 @@ class Deck extends Component {
       <View style={styles.container}>
         {entries && deckId &&
           <View style={styles.deck}>
-            <Text style={styles.deckTitle}>{title}</Text>
-            <Text style={styles.deckInfo}>{entries[deckId].cards.length} cards</Text>
+            <View style={styles.titleContainer}>
+              <Text style={styles.deckTitle}>{title}</Text>
+              <Text style={styles.deckInfo}>
+                {entries[deckId].cards.length} cards
+              </Text>
+            </View>
             <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={[styles.button, {backgroundColor: white}]}
               onPress={() => this.addCard(navigation)}>
-              <Text style={[styles.buttonText, {color: black}]}>Add Card</Text>
+              <Text style={[styles.buttonText, {color: black}]}>
+                Add Card
+              </Text>
             </TouchableOpacity>
             { canStartQuize &&
               <TouchableOpacity
-                style={[styles.button, {backgroundColor: black}]}
+                style={[styles.button, {backgroundColor: gray1}]}
                 onPress={() => (
                   this.startQuiz(dispatch, navigation)
                 )}>
-                <Text style={[styles.buttonText, {color: white}]}>Start Quiz</Text>
+                <Text style={[styles.buttonText, {color: white}]}>
+                  Start Quiz
+                </Text>
               </TouchableOpacity>
             }
             </View>
@@ -82,6 +90,10 @@ const styles = StyleSheet.create({
       },
     })
   },
+  titleContainer: {
+    height: '60%',
+    alignItems: 'center',
+  },
   deckTitle: {
     fontSize: 30,
     fontWeight: 'bold',
@@ -95,15 +107,16 @@ const styles = StyleSheet.create({
     color: gray3,
   },
   buttonContainer: {
-    margin: 50,
-    marginTop: 300,
+    height: '40%',
+    alignItems: 'center',
   },
   button: {
-    width: 200,
-    margin:10,
-    padding: 20,
-    paddingLeft: 50,
-    paddingRight: 50,
+    justifyContent: 'center',
+    width: 150,
+    height: 50,
+    margin: 10,
+    paddingLeft: 30,
+    paddingRight: 30,
     borderRadius: 10,
     borderWidth: 1,
     borderColor: black,
@@ -111,6 +124,7 @@ const styles = StyleSheet.create({
   buttonText: {
     textAlign: 'center',
     fontSize: 15,
+    fontWeight: 'bold',
   }
 });
 
