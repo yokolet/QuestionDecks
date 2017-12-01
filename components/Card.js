@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import {
   Dimensions,
-  Platform,
   StyleSheet,
   View
 } from 'react-native'
 import { connect } from 'react-redux'
 import { white, gray5 } from '../utils/colors'
+import { commonStyles } from './CommonStyles'
 import { CardHeader } from './CardHeader'
 import CardBody from './CardBody'
 import { CardResult } from './CardResult'
@@ -69,10 +69,10 @@ class Card extends Component {
       ? CardResultButtons(entries[deckId].name, this.restartQuiz, this.backToDeck)
       : CardButtons(total, card.answer, this.answerAndGo)
     return (
-      <View style={styles.container}>
+      <View style={commonStyles.container}>
         {entries && deckId &&
-          <View style={styles.card}>
-            <View style={styles.questionContainer}>
+          <View style={[commonStyles.base, styles.base]}>
+            <View style={commonStyles.upperContainer}>
               <CardHeader
                 correct={correct}
                 total={total}
@@ -91,32 +91,8 @@ class Card extends Component {
 
 const { height } = Dimensions.get('window')
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  card: {
+  base: {
     height: height,
-    backgroundColor: white,
-    borderColor: gray5,
-    height,
-    borderWidth: 1,
-    padding: 30,
-    margin: 5,
-    ...Platform.select({
-      ios: {
-        shadowColor: 'rgba(0, 0, 0, .2)',
-        shadowOffset:  { height: 0, width: 0 },
-        shadowOpacity: 1,
-        shadowRadius: 1,
-      },
-      android: {
-        elevation: 1,
-      },
-    })
-  },
-  questionContainer: {
-    height: '60%',
-    alignItems: 'center',
   },
 });
 

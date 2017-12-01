@@ -6,47 +6,34 @@ import {
   View
 } from 'react-native'
 import { white, black, gray1 } from '../utils/colors'
+import { commonStyles } from './CommonStyles'
 
 export const CardResultButtons = (deckName, restartQuiz, backToDeck) => {
   return (
-    <View style={styles.buttonContainer}>
+    <View style={commonStyles.lowerContainer}>
       <TouchableOpacity
-        style={[styles.button,
-                {backgroundColor: gray1, borderColor: black}]}
+        style={[commonStyles.button, styles.button, {backgroundColor: gray1}]}
         onPress={() => restartQuiz()}
       >
-        <Text style={styles.buttonText}>Restart Quiz</Text>
+        <Text style={[commonStyles.buttonText, {color: white}]}>
+          Restart Quiz
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={[styles.button,
-                {backgroundColor: white, borderColor: black}]}
+        style={[commonStyles.button, styles.button, {backgroundColor: white}]}
         onPress={() => backToDeck(deckName)}
       >
-        <Text style={[styles.buttonText, {color: black}]}>Back to Deck</Text>
+        <Text style={[commonStyles.buttonText, {color: black}]}>
+          Back to Deck
+        </Text>
       </TouchableOpacity>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  buttonContainer: {
-    height: '40%',
-    alignItems: 'center',
-  },
   button: {
-    justifyContent: 'center',
     width: 200,
-    height: 50,
-    margin: 10,
-    paddingLeft: 20,
-    paddingRight: 20,
-    borderRadius: 10,
-    borderWidth: 1,
+    borderColor: black,
   },
-  buttonText: {
-    textAlign: 'center',
-    fontSize: 15,
-    fontWeight: 'bold',
-    color: white,
-  }
 });
