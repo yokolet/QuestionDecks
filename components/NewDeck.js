@@ -9,7 +9,7 @@ import {
 } from 'react-native'
 import { FormLabel, FormInput } from 'react-native-elements'
 import { connect } from 'react-redux'
-import { white, black, gray1, red } from '../utils/colors'
+import { white, black, gray1, gray5, red } from '../utils/colors'
 import { commonStyles } from './CommonStyles'
 import { addNewDeck } from '../actions'
 
@@ -66,6 +66,7 @@ class NewDeck extends Component {
           </Text>
           <FormLabel>Deck Title</FormLabel>
           <FormInput
+            inputStyle={{color: this.state.onEdit ? gray1 : gray5}}
             onChangeText={(input) => this.updateText(input)}
             value={this.state.text}
           />

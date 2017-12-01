@@ -108,6 +108,7 @@ class NewCard extends Component {
         <ScrollView style={[commonStyles.base, styles.base]}>
           <FormLabel>Category</FormLabel>
           <FormInput
+            inputStyle={{color: this.state.category.onEdit ? gray1 : gray5}}
             onChangeText={(input) => this.updateText('category', input)}
             value={this.state.category.text}
           >
@@ -117,6 +118,7 @@ class NewCard extends Component {
           </Text>
           <FormLabel>Question</FormLabel>
           <FormInput
+            inputStyle={{color: this.state.question.onEdit ? gray1 : gray5}}
             onChangeText={(input) => this.updateText('question', input)}
             value={this.state.question.text}
           >
