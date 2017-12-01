@@ -6,7 +6,7 @@ import {
 } from 'react-native'
 import { black, gray3 } from '../utils/colors'
 
-export default function CardHeader ({correct, total, index, category}) {
+export const CardHeader = ({correct, total, index, category}) => {
   let progress = correct + '/' + total
   let cardLeft = (total - index)
   return (

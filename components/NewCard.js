@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function mapStateToProps (deckData) {
+const mapStateToProps = (deckData) => {
   return {
     entries: deckData.entries,
     deckId: deckData.deckId,

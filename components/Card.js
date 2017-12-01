@@ -7,7 +7,7 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 import { white, gray5 } from '../utils/colors'
-import CardHeader from './CardHeader'
+import { CardHeader } from './CardHeader'
 import CardBody from './CardBody'
 import { CardResult } from './CardResult'
 import { CardButtons } from './CardButtons'
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function mapStateToProps (deckData) {
+const mapStateToProps = (deckData) => {
   return {
     entries: deckData.entries,
     deckId: deckData.deckId,
